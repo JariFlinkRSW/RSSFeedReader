@@ -1,0 +1,125 @@
+@page "/"
+
+@using RSSFeedReader.UI.Models
+@using RSSFeedReader.UI.Services
+
+@inject SubscriptionsApiClient ApiClient
+
+<PageTitle>Subscriptions</PageTitle>
+
+<h1>Subscriptions</h1>
+
+<p>Add and view RSS feed subscriptions.</p>
+
+<div class="row g-2 align-items-start">
+	<div class="col-12 col-md-9">
+		<input
+			class="form-control"
+			@bind="_newUrl"
+			@bind:event="oninput"
+			placeholder="https://example.com/feed.xml"
+			disabled="@_isSubmitting" />
+	</div>
+	<div class="col-12 col-md-3">
+		<button class="btn btn-primary w-100" @onclick="AddAsync" disabled="@_isSubmitting">Add</button>
+	</div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(_errorMessage))
+{
+	<div class="text-danger mt-2">@_errorMessage</div>
+}
+
+<hr />
+
+@if (_isLoading)
+{
+	<p>Loading…</p>
+}
+else if (_subscriptions.Count == 0)
+{
+	<p>No subscriptions yet.</p>
+}
+else
+{
+	<ul class="list-group">
+		@foreach (var item in _subscriptions)
+		{
+			<li class="list-group-item">@item.Url</li>
+		}
+	</ul>
+}
+
+@code {
+	private readonly List<SubscriptionDto> _subscriptions = new();
+	private bool _isLoading = true;
+	private bool _isSubmitting;
+	private string _newUrl = string.Empty;
+	private string? _errorMessage;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadAsync();
+	}
+
+	private async Task LoadAsync()
+	{
+		_isLoading = true;
+		_errorMessage = null;
+
+		try
+		{
+			var items = await ApiClient.GetSubscriptionsAsync();
+			_subscriptions.Clear();
+			_subscriptions.AddRange(items);
+		}
+		catch (HttpRequestException)
+		{
+			_errorMessage = "Could not reach the API.";
+		}
+		catch
+		{
+			_errorMessage = "Something went wrong.";
+		}
+		finally
+		{
+			_isLoading = false;
+		}
+	}
+
+	private async Task AddAsync()
+	{
+		_errorMessage = null;
+
+		var trimmed = _newUrl.Trim();
+		if (string.IsNullOrWhiteSpace(trimmed))
+		{
+			_errorMessage = "Please enter a URL.";
+			return;
+		}
+
+		_isSubmitting = true;
+		try
+		{
+			var created = await ApiClient.CreateSubscriptionAsync(trimmed);
+			_subscriptions.Add(created);
+			_newUrl = string.Empty;
+		}
+		catch (InvalidOperationException ex)
+		{
+			_errorMessage = ex.Message;
+		}
+		catch (HttpRequestException)
+		{
+			_errorMessage = "Could not reach the API.";
+		}
+		catch
+		{
+			_errorMessage = "Something went wrong.";
+		}
+		finally
+		{
+			_isSubmitting = false;
+		}
+	}
+}
