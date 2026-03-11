@@ -7,7 +7,7 @@ This quickstart describes the expected developer workflow once the backend and f
 
 ## Prerequisites
 
-- .NET SDK 8.x installed (`dotnet --version`)
+- A .NET SDK that can build `net8.0` (8.0+)
 
 ## Project layout
 
@@ -18,16 +18,16 @@ Expected layout (see [plan.md](plan.md)):
 
 ## Configure ports and API base URL
 
-- Backend listens on a localhost port (from `backend/RSSFeedReader.Api/Properties/launchSettings.json`).
-- Frontend runs on a different localhost port (from `frontend/RSSFeedReader.UI/Properties/launchSettings.json`).
-- Frontend config in `frontend/RSSFeedReader.UI/wwwroot/appsettings.json` contains `ApiBaseUrl` pointing at the backend.
+- Backend HTTP: `http://localhost:5151` (from `backend/RSSFeedReader.Api/Properties/launchSettings.json`)
+- Frontend HTTP: `http://localhost:5213` (from `frontend/RSSFeedReader.UI/Properties/launchSettings.json`)
+- Frontend config in `frontend/RSSFeedReader.UI/wwwroot/appsettings.json` contains `ApiBaseUrl` pointing at the backend `/api/` (example: `http://localhost:5151/api/`).
 
 ## Run backend
 
 From repo root:
 
 ```powershell
-dotnet run --project backend/RSSFeedReader.Api
+dotnet run --project backend/RSSFeedReader.Api --launch-profile http
 ```
 
 ## Run frontend
@@ -35,7 +35,7 @@ dotnet run --project backend/RSSFeedReader.Api
 From repo root:
 
 ```powershell
-dotnet run --project frontend/RSSFeedReader.UI
+dotnet run --project frontend/RSSFeedReader.UI --launch-profile http
 ```
 
 ## Verify MVP behavior
