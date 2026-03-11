@@ -67,11 +67,6 @@ As a user, I want the app to prevent adding an empty subscription so the list st
 
 ### Edge Cases
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
--->
-
 - Empty/whitespace input is rejected (no entry added).
 - Duplicate URLs are allowed in MVP (added entries appear as submitted) unless explicitly changed in a future scope update.
 - Very long input must not crash the app; the list remains usable and the value is still visible to the user.
@@ -79,11 +74,6 @@ As a user, I want the app to prevent adding an empty subscription so the list st
 - Extended-MVP+ (future): if any feed content is rendered, it must be displayed safely (no executing scripts/markup from untrusted sources).
 
 ## Requirements *(mandatory)*
-
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
--->
 
 ### Functional Requirements
 
@@ -114,11 +104,6 @@ As a user, I want the app to prevent adding an empty subscription so the list st
 - **Subscription List**: The ordered collection of subscriptions currently in the session.
 
 ## Success Criteria *(mandatory)*
-
-<!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
--->
 
 ### Measurable Outcomes
 
