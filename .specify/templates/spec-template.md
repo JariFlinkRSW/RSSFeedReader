@@ -72,8 +72,12 @@
   Fill them out with the right edge cases.
 -->
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- What happens when input is empty/whitespace?
+- What happens when a subscription URL is duplicated?
+- What happens when input is extremely long (UI/perf)?
+- How should the system behave when a future Extended-MVP feature introduces network calls
+  and they fail (timeouts, bad XML, non-200 responses)?
+- If any HTML rendering is introduced (Extended-MVP+), how is XSS risk prevented?
 
 ## Requirements *(mandatory)*
 

@@ -31,7 +31,14 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Use `.specify/memory/constitution.md` and verify:
+
+- MVP scope discipline: feature stays within MVP unless explicitly Extended-MVP.
+- Security surface: no network fetching/parsing in MVP; if introduced, add timeouts,
+  size limits, safe parsing, and safe rendering.
+- Maintainability: clear backend/frontend boundaries; no speculative abstractions.
+- Quality gates: clean build; no new warnings; tests exist for non-trivial logic.
+- Operational clarity: clear errors; no sensitive data in logs.
 
 ## Project Structure
 
